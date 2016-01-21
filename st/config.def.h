@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Inconsolata:pixelsize=12:antialias=true:autohint=false";
+static char font[] = "Inconsolata:pixelsize=28:antialias=false:autohint=false";
 static int borderpx = 2;
 static char shell[] = "/bin/sh";
 static char *utmp = NULL;
@@ -23,7 +23,7 @@ static float chscale = 1.0;
  *
  * More advanced example: " `'\"()[]{}"
  */
-static char worddelimiters[] = " ";
+static char worddelimiters[] = " ()";
 
 /* selection timeouts (in milliseconds) */
 static unsigned int doubleclicktimeout = 300;
