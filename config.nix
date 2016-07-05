@@ -33,6 +33,7 @@
                 slmenu
                 st
                 vis
+                weechat
                 wget
                 which
                 xclip
