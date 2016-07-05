@@ -1,0 +1,102 @@
+diff --git a/config.def.h b/config.def.h
+index 93a3d49..264b997 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -12,7 +12,7 @@ static Bool zoomto96dpi     = TRUE;  /* Zoom pages to always emulate 96dpi */
+ static Bool runinfullscreen = FALSE; /* Run in fullscreen mode by default */
+ 
+ static guint defaultfontsize = 12;   /* Default font size */
+-static gfloat zoomlevel = 1.0;       /* Default zoom level */
++static gfloat zoomlevel = 2.0;       /* Default zoom level */
+ 
+ /* Soup default features */
+ static char *cookiefile     = "~/.surf/cookies.txt";
+@@ -48,7 +48,7 @@ static Bool allowgeolocation      = TRUE;
+ /* DOWNLOAD(URI, referer) */
+ #define DOWNLOAD(d, r) { \
+ 	.v = (char *[]){ "/bin/sh", "-c", \
+-	     "st -e /bin/sh -c \"curl -L -J -O --user-agent '$1'" \
++	     " st -e /bin/sh -c \"cd ~/downloads; curl -L -J -O --user-agent '$1'" \
+ 	     " --referer '$2' -b $3 -c $3 '$0';" \
+ 	     " sleep 5;\"", \
+ 	     d, useragent, r, cookiefile, NULL \
+@@ -110,7 +110,6 @@ static Key keys[] = {
+ 	{ 0,                    GDK_F11,    fullscreen, { 0 } },
+ 	{ 0,                    GDK_Escape, stop,       { 0 } },
+ 	{ MODKEY,               GDK_o,      source,     { 0 } },
+-	{ MODKEY|GDK_SHIFT_MASK,GDK_o,      inspector,  { 0 } },
+ 
+ 	{ MODKEY,               GDK_g,      spawn,      SETPROP("_SURF_URI", "_SURF_GO") },
+ 	{ MODKEY,               GDK_f,      spawn,      SETPROP("_SURF_FIND", "_SURF_FIND") },
+@@ -135,7 +134,13 @@ static Button buttons[] = {
+ 	/* click        event mask  button  function        argument */
+ 	{ ClkLink,      0,          2,      linkopenembed,  { 0 } },
+ 	{ ClkLink,      MODKEY,     2,      linkopen,       { 0 } },
+-	{ ClkLink,      MODKEY,     1,      linkopen,       { 0 } },
++	{ ClkLink,      MODKEY,     1,      linkopenembed,  { 0 } },
+ 	{ ClkAny,       0,          8,      navigate,       { .i = -1 } },
+ 	{ ClkAny,       0,          9,      navigate,       { .i = +1 } },
+ };
++
++static SearchEngine searchengines[] = {
++	{ "g",    "https://encrypted.google.com/search?q=%s"        },
++	{ "w",    "https://en.wikipedia.org/w/index.php?search=%s" },
++	{ "h",    "https://hackage.haskell.org/packages/search?terms=%s" },
++};
+diff --git a/surf.c b/surf.c
+index f2170a4..8803c64 100644
+--- a/surf.c
++++ b/surf.c
+@@ -91,6 +91,12 @@ typedef struct {
+ G_DEFINE_TYPE(CookieJar, cookiejar, SOUP_TYPE_COOKIE_JAR_TEXT)
+ 
+ typedef struct {
++       char *token;
++       char *uri;
++} SearchEngine;
++
++
++typedef struct {
+ 	char *regex;
+ 	char *style;
+ 	regex_t re;
+@@ -178,6 +184,7 @@ static void loaduri(Client *c, const Arg *arg);
+ static void navigate(Client *c, const Arg *arg);
+ static Client *newclient(void);
+ static void newwindow(Client *c, const Arg *arg, gboolean noembed);
++static gchar *parseuri(const gchar *uri);
+ static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
+ static gboolean contextmenu(WebKitWebView *view, GtkWidget *menu,
+                             WebKitHitTestResult *target, gboolean keyboard,
+@@ -838,8 +845,7 @@ loaduri(Client *c, const Arg *arg)
+ 		u = g_strdup_printf("file://%s", rp);
+ 		free(rp);
+ 	} else {
+-		u = g_strrstr(uri, "://") ? g_strdup(uri)
+-		    : g_strdup_printf("http://%s", uri);
++        u = parseuri(uri);
+ 	}
+ 
+ 	setatom(c, AtomUri, uri);
+@@ -1172,6 +1178,21 @@ menuactivate(GtkMenuItem *item, Client *c)
+ 	}
+ }
+ 
++static gchar *
++parseuri(const gchar *uri) {
++   guint i;
++
++   for (i = 0; i < LENGTH(searchengines); i++) {
++       if (searchengines[i].token == NULL || searchengines[i].uri == NULL || \
++           *(uri + strlen(searchengines[i].token)) != ' ')
++           continue;
++       if (g_str_has_prefix(uri, searchengines[i].token))
++           return g_strdup_printf(searchengines[i].uri, uri + strlen(searchengines[i].token) + 1);
++   }
++
++   return g_strrstr(uri, "://") ? g_strdup(uri) : g_strdup_printf("http://%s", uri);
++}
++
+ void
+ pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)
+ {

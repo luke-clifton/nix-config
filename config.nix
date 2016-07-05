@@ -1,19 +1,65 @@
 {
-	allowUnfree = true;
+    packageOverrides = pkgs: rec {
 
-	packageOverrides = super: let self = super.pkgs; in {
+        st = pkgs.st.override {conf = (builtins.readFile ./st/config.def.h); };
 
-		haskellPackages = super.haskellPackages.override {
-			overrides = self: super: {
-				hadoop-rpc = self.callPackage /home/lukec/src/hadoop-rpc {};
-				hadoop-tools = self.callPackage /home/lukec/src/hadoop-tools {};
-			};
-		};
-		gsasl = super.stdenv.lib.overrideDerivation super.gsasl (x : {
-			configureFlags = "--with-gssapi-impl=mit";
-			nativeBuildInputs = x.nativeBuildInputs ++ [ super.libkrb5 ];
-		});
+        surf = pkgs.surf.override { patches = ./surf.diff; };
 
-		st = super.st.override { conf = (builtins.readFile ./st/config.def.h); };
-	};
+        gsasl = pkgs.stdenv.lib.overrideDerivation pkgs.gsasl (oldAttrs : {
+                nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.krb5Full];
+                configureFlags = "--with-gssapi-impl=mit";
+        });
+
+        # Small core of things I need.
+        coreEnv = with pkgs; buildEnv {
+            name = "coreEnv";
+            paths = [
+                abduco
+                ack
+                curl
+                dmenu
+                dvtm
+                entr
+                ired
+                file
+                gist
+                git
+                moreutils
+                (neovim.override {vimAlias = true;})
+                netcat-openbsd
+                nix-repl
+                nq
+                pv
+                slmenu
+                st
+                stBig
+                vis
+                wget
+                which
+                xclip
+                xdotool
+                zathura
+            ];
+        };
+
+        # A more complete base system that I don't want to rebuild
+        # as frequently as core.
+        baseEnv = with pkgs; buildEnv {
+            name = "baseEnv";
+            paths = [
+                firefox
+                surf
+                tabbed
+            ];
+        };
+
+        # Stuff I need for work
+        workEnv = with pkgs; buildEnv {
+            name = "workEnv";
+            paths = [
+                cntlm
+            ];
+        };
+
+    };
 }
