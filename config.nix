@@ -32,12 +32,12 @@
                 pv
                 slmenu
                 st
-                stBig
                 vis
                 wget
                 which
                 xclip
                 xdotool
+                youtube-dl
                 zathura
             ];
         };
@@ -48,6 +48,7 @@
             name = "baseEnv";
             paths = [
                 firefox
+                mpv
                 surf
                 tabbed
             ];
