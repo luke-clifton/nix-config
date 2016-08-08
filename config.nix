@@ -1,7 +1,8 @@
 {
     packageOverrides = pkgs: rec {
 
-        # A more complete editing experience.
+        # A more complete editing experience, but slightly slower
+        # loading speeds.
         vimx = pkgs.vim_configurable.customize {
             name = "vimx";
             vimrcConfig.vam.knownPlugins = pkgs.vimPlugins;
@@ -19,20 +20,17 @@
                 configureFlags = "--with-gssapi-impl=mit";
         });
 
-        # Small core of things I need.
+        # Small core of things I need excluding X stuff.
         coreEnv = with pkgs; buildEnv {
             name = "coreEnv";
             paths = [
                 abduco
                 ack
                 curl
-                dmenu
                 dvtm
                 entr
                 file
-                gist
                 git
-                imagemagick
                 ired
                 moreutils
                 netcat-openbsd
@@ -40,28 +38,44 @@
                 nq
                 pv
                 slmenu
-                st
                 vim
-                weechat
                 wget
                 which
-                xclip
-                xdotool
-                youtube-dl
-                zathura
             ];
         };
+
+        # Some core things that I need when using X
+        coreXEnv = with pkgs; buildEnv {
+            name = "coreXEnv";
+            paths = [
+                dmenu
+                st
+                xclip
+                xdotool
+            ];
+        };
+
 
         # A more complete base system that I don't want to rebuild
         # as frequently as core.
         baseEnv = with pkgs; buildEnv {
             name = "baseEnv";
             paths = [
+                imagemagick
+                vimx
+                weechat
+            ];
+        };
+
+        baseXEnv = with pkgs; buildEnv {
+            name = "baseXEnv";
+            paths = [
                 firefox
                 mpv
                 surf
                 tabbed
-                vimx
+                youtube-dl  # A version without the X deps would be nice.
+                zathura
             ];
         };
 
