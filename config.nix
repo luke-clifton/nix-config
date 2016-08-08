@@ -1,6 +1,15 @@
 {
     packageOverrides = pkgs: rec {
 
+        # A more complete editing experience.
+        vimx = pkgs.vim_configurable.customize {
+            name = "vimx";
+            vimrcConfig.vam.knownPlugins = pkgs.vimPlugins;
+            vimrcConfig.vam.pluginDictionaries = [
+                { name = "fugitive"; }
+            ];
+        };
+
         st = pkgs.st.override {conf = (builtins.readFile ./st/config.def.h); };
 
         surf = pkgs.surf.override { patches = ./surf.diff; };
@@ -20,20 +29,19 @@
                 dmenu
                 dvtm
                 entr
-                imagemagick
-                ired
                 file
                 gist
                 git
+                imagemagick
+                ired
                 moreutils
-                (neovim.override {vimAlias = true;})
                 netcat-openbsd
                 nix-repl
                 nq
                 pv
                 slmenu
                 st
-                vis
+                vim
                 weechat
                 wget
                 which
@@ -53,6 +61,7 @@
                 mpv
                 surf
                 tabbed
+                vimx
             ];
         };
 
