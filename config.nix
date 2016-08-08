@@ -20,6 +20,7 @@
                 dmenu
                 dvtm
                 entr
+                imagemagick
                 ired
                 file
                 gist
