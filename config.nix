@@ -30,6 +30,7 @@
                       dvtm
                       netcat-openbsd
                       nq
+                      slmenu
                     ];
                     darwin_only = [];
                 in [
@@ -42,7 +43,6 @@
                   moreutils
                   nix-repl
                   pv
-                  slmenu
                   vim
                   wget
                   which
