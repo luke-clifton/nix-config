@@ -41,7 +41,6 @@
                   ired
                   moreutils
                   nix-repl
-                  nq
                   pv
                   slmenu
                   vim
