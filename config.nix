@@ -31,7 +31,6 @@
                 git
                 ired
                 moreutils
-                netcat-openbsd
                 nix-repl
                 nq
                 pv
@@ -40,7 +39,7 @@
                 wget
                 which
             ]
-            ++ lib.optionals (system != "x86_64-darwin") [abduco dvtm];
+            ++ lib.optionals (system != "x86_64-darwin") [abduco dvtm netcat-openbsd];
         };
 
         # Some core things that I need when using X
