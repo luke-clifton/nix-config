@@ -26,7 +26,6 @@
             paths = [
                 ack
                 curl
-                dvtm
                 entr
                 file
                 git
@@ -41,7 +40,7 @@
                 wget
                 which
             ]
-            ++ (if system != "x86_64-darwin" then [abduco] else []);
+            ++ lib.optionals (system != "x86_64-darwin") [abduco dvtm];
         };
 
         # Some core things that I need when using X
