@@ -24,7 +24,6 @@
         coreEnv = with pkgs; buildEnv {
             name = "coreEnv";
             paths = [
-                abduco
                 ack
                 curl
                 dvtm
@@ -41,7 +40,8 @@
                 vim
                 wget
                 which
-            ];
+            ]
+            ++ (if system != "x86_64-darwin" then [abduco] else []);
         };
 
         # Some core things that I need when using X
