@@ -23,23 +23,33 @@
         # Small core of things I need excluding X stuff.
         coreEnv = with pkgs; buildEnv {
             name = "coreEnv";
-            paths = [
-                ack
-                curl
-                entr
-                file
-                git
-                ired
-                moreutils
-                nix-repl
-                nq
-                pv
-                slmenu
-                vim
-                wget
-                which
-            ]
-            ++ lib.optionals (system != "x86_64-darwin") [abduco dvtm netcat-openbsd];
+            paths = 
+                let
+                    linux_only = [
+                      abduco
+                      dvtm
+                      netcat-openbsd
+                      nq
+                    ];
+                    darwin_only = [];
+                in [
+                  ack
+                  curl
+                  entr
+                  file
+                  git
+                  ired
+                  moreutils
+                  nix-repl
+                  nq
+                  pv
+                  slmenu
+                  vim
+                  wget
+                  which
+                ]
+                ++ lib.optionals (system == "x86_64-linux") linux_only
+                ++ lib.optionals (system == "x86_64-darwin") darwin_only;
         };
 
         # Some core things that I need when using X
