@@ -1,4 +1,6 @@
 {
+    # Uncomment when installing cntlm
+    # allowBroken = true;
     packageOverrides = pkgs: rec {
 
         # A more complete editing experience, but slightly slower
@@ -19,6 +21,15 @@
                 nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.krb5Full];
                 configureFlags = "--with-gssapi-impl=mit";
         });
+
+        # Build cntlm on OS X
+        cntlm = with pkgs.stdenv.lib;
+            overrideDerivation pkgs.cntlm (oldAttrs : {
+                preConfigure = ''
+                    sed -e 's/gcc/clang/' Makefile > Makefile.clang
+                    sed -i 's/CSS=.*/CSS="xlc_r gcc clang"/' configure
+                '';
+            });
 
         # Small core of things I need excluding X stuff.
         coreEnv = with pkgs; buildEnv {
@@ -70,8 +81,8 @@
             paths = [
                 imagemagick
                 vimx
-                weechat
-            ];
+            ]
+            ++ lib.optionals (system == "x86_64-linux") [ weechat ];
         };
 
         baseXEnv = with pkgs; buildEnv {
