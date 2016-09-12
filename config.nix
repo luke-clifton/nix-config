@@ -11,8 +11,6 @@
             vimrcConfig.vam.pluginDictionaries = [
                 { name = "colors-solarized"; }
                 { name = "fugitive"; }
-                { name = "haskell-vim"; }
-                { name = "tslime"; }
             ];
             vimrcConfig.customRC = ''
               set hidden
@@ -66,6 +64,7 @@
                   entr
                   file
                   git
+                  gitAndTools.git-crypt
                   ired
                   moreutils
                   nix-repl
@@ -95,8 +94,12 @@
         baseEnv = with pkgs; buildEnv {
             name = "baseEnv";
             paths = [
+                aspell
+                aspellDicts.en
                 imagemagick
+                openssl
                 vimx
+                webfs
             ]
             ++ lib.optionals (system == "x86_64-linux") [ weechat ];
         };
