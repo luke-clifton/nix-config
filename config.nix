@@ -96,6 +96,7 @@
             name = "baseEnv";
             paths = [
                 imagemagick
+                shellcheck
                 vimx
             ]
             ++ lib.optionals (system == "x86_64-linux") [ weechat ];
