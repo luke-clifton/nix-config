@@ -78,6 +78,7 @@
                 aspellDicts.en
                 imagemagick
                 openssl
+                shellcheck
                 vimx
                 webfs
             ]
