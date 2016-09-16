@@ -23,4 +23,10 @@ or if you aren't on NixOS
 
     nix-env -iA nixpkgs.coreEnv
 
+Dotfiles
+========
 
+Some of my dotfiles are included here. I manage my dotfiles in Nix
+by creating an executable that I can run that will update my dotfiles
+that I configure in my nix config. See [the dotfiles](./dotfiles) directory
+for examples.
