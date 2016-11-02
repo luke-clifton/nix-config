@@ -1,5 +1,5 @@
 diff --git a/config.def.h b/config.def.h
-index 93a3d49..264b997 100644
+index 93a3d49..2ab8f5f 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -12,7 +12,7 @@ static Bool zoomto96dpi     = TRUE;  /* Zoom pages to always emulate 96dpi */
@@ -28,7 +28,7 @@ index 93a3d49..264b997 100644
  
  	{ MODKEY,               GDK_g,      spawn,      SETPROP("_SURF_URI", "_SURF_GO") },
  	{ MODKEY,               GDK_f,      spawn,      SETPROP("_SURF_FIND", "_SURF_FIND") },
-@@ -135,7 +134,13 @@ static Button buttons[] = {
+@@ -135,7 +134,14 @@ static Button buttons[] = {
  	/* click        event mask  button  function        argument */
  	{ ClkLink,      0,          2,      linkopenembed,  { 0 } },
  	{ ClkLink,      MODKEY,     2,      linkopen,       { 0 } },
@@ -42,6 +42,7 @@ index 93a3d49..264b997 100644
 +	{ "g",    "https://encrypted.google.com/search?q=%s"        },
 +	{ "w",    "https://en.wikipedia.org/w/index.php?search=%s" },
 +	{ "h",    "https://hackage.haskell.org/packages/search?terms=%s" },
++	{ "c",    "https://crates.io/search?q=%s" },
 +};
 diff --git a/surf.c b/surf.c
 index f2170a4..8803c64 100644
