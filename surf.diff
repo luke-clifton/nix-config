@@ -95,7 +95,7 @@ index f2170a4..8803c64 100644
 +           return g_strdup_printf(searchengines[i].uri, uri + strlen(searchengines[i].token) + 1);
 +   }
 +
-+   return g_strrstr(uri, "://") ? g_strdup(uri) : g_strdup_printf("http://%s", uri);
++   return g_strrstr(uri, "://") ? g_strdup(uri) : g_strdup_printf("https://%s", uri);
 +}
 +
  void
