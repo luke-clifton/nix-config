@@ -5,6 +5,7 @@ let
   dotfiles = {
     ".aspell.conf" = import ./aspell.nix pkgs;
     ".gitconfig" = ./gitconfig;
+    ".xprofile" = import ./xprofile.nix pkgs;
   };
 
 in

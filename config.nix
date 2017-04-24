@@ -3,18 +3,6 @@
     # allowBroken = true;
     packageOverrides = pkgs: rec {
 
-        acmeclient = pkgs.stdenv.mkDerivation {
-          name = "acme-client-0.1.11";
-          src = pkgs.fetchurl {
-            url = "https://kristaps.bsd.lv/acme-client/snapshots/acme-client-portable.tgz";
-            sha512 = "daee24d55430a12bef559b0e0f5ef894aafb49894c21db875d2c561df7ee0254ad3a4f7b3ed743c445f90c522aa77b927d2c24f935a0979eb585b995733ccd5c";
-          };
-          buildInputs = [ pkgs.libressl pkgs.libbsd ];
-          installPhase = ''
-            PREFIX=$out make install
-          '';
-        };
-
         # A more complete editing experience, but slightly slower
         # loading speeds.
         vimx = import ./vimx.nix pkgs;
@@ -89,8 +77,10 @@
                 aspell
                 aspellDicts.en
                 imagemagick
+                isync
+                mutt
                 openssl
-                shellcheck
+                haskellPackages.ShellCheck
                 vimx
                 webfs
             ]
