@@ -8,7 +8,10 @@
         # loading speeds.
         vimx = import ./vimx.nix pkgs;
 
-        st = pkgs.st.override {conf = (builtins.readFile ./st/config.def.h); };
+        st = pkgs.st.override {
+          conf = (builtins.readFile ./st/config.def.h);
+          patches = [./st/st-no_bold_colors-20160727-308bfbf.diff];
+        };
 
         surf = pkgs.surf-webkit2.override { patches = ./surf.diff; };
 
