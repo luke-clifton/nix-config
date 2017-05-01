@@ -1,5 +1,5 @@
 diff --git a/config.def.h b/config.def.h
-index 6d3135e..752cf48 100644
+index 6d3135e..70a8d90 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -32,7 +32,7 @@ static Parameter defconfig[ParameterLast] = {
@@ -56,7 +56,13 @@ index 6d3135e..752cf48 100644
  
  	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_c,      toggle,     { .i = CaretBrowsing } },
  	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } },
-@@ -164,3 +160,11 @@ static Button buttons[] = {
+@@ -159,8 +155,16 @@ static Button buttons[] = {
+ 	/* target       event mask      button  function        argument        stop event */
+ 	{ OnLink,       0,              2,      clicknewwindow, { .b = 0 },     1 },
+ 	{ OnLink,       MODKEY,         2,      clicknewwindow, { .b = 1 },     1 },
+-	{ OnLink,       MODKEY,         1,      clicknewwindow, { .b = 1 },     1 },
++	{ OnLink,       MODKEY,         1,      clicknewwindow, { .b = 0 },     1 },
+ 	{ OnAny,        0,              8,      clicknavigate,  { .i = -1 },    1 },
  	{ OnAny,        0,              9,      clicknavigate,  { .i = +1 },    1 },
  	{ OnMedia,      MODKEY,         1,      clickexternplayer, { 0 },       1 },
  };
