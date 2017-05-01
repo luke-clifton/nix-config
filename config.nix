@@ -1,4 +1,5 @@
 {
+    # permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
     # Uncomment when installing cntlm
     # allowBroken = true;
     packageOverrides = pkgs: rec {
@@ -9,7 +10,7 @@
 
         st = pkgs.st.override {conf = (builtins.readFile ./st/config.def.h); };
 
-        surf = pkgs.surf.override { patches = ./surf.diff; };
+        surf = pkgs.surf-webkit2.override { patches = ./surf.diff; };
 
         gsasl = pkgs.stdenv.lib.overrideDerivation pkgs.gsasl (oldAttrs : {
                 nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.krb5Full];
