@@ -64,6 +64,7 @@
                   vim
                   wget
                   which
+                  (pkgs.callPackage ./withGhc.nix {})
                 ]
                 ++ lib.optionals (system == "x86_64-linux") linux_only
                 ++ lib.optionals (system == "x86_64-darwin") darwin_only;
