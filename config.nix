@@ -112,7 +112,7 @@
         };
 
         # Installs a script to manage your dot-files with nix
-        dotfiles = import ./dotfiles pkgs;
+        dotfiles = import ./dotfiles pkgs.pkgs;
 
     };
 }

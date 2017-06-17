@@ -6,6 +6,10 @@ let
     ".aspell.conf" = import ./aspell.nix pkgs;
     ".gitconfig" = ./gitconfig;
     ".xprofile" = import ./xprofile.nix pkgs;
+    ".ghci" = pkgs.writeText "dot-ghci" ''
+      :set prompt "λ "
+      :set prompt2 "| "
+    '';
   };
 
 in
