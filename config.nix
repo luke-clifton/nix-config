@@ -2,6 +2,7 @@
     # permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
     # Uncomment when installing cntlm
     # allowBroken = true;
+    allowUnfree = true;
     packageOverrides = pkgs: rec {
 
         # A more complete editing experience, but slightly slower
@@ -13,7 +14,7 @@
           patches = [./st/st-no_bold_colors-20160727-308bfbf.diff];
         };
 
-        surf = pkgs.surf-webkit2.override { patches = ./surf.diff; };
+        #surf = pkgs.surf-webkit2.override { patches = ./surf.diff; };
 
         gsasl = pkgs.stdenv.lib.overrideDerivation pkgs.gsasl (oldAttrs : {
                 nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.krb5Full];
@@ -51,7 +52,6 @@
                   gitAndTools.git-crypt
                   ired
                   moreutils
-                  nix-repl
                   pv
                   vim
                   wget
@@ -97,7 +97,7 @@
             paths = [
                 firefox
                 mpv
-                surf
+                #surf
                 tabbed
                 youtube-dl  # A version without the X deps would be nice.
                 zathura
@@ -114,6 +114,7 @@
 
         # Installs a script to manage your dot-files with nix
         dotfiles = import ./dotfiles pkgs.pkgs;
+
 
     };
 }
