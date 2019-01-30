@@ -13,8 +13,11 @@
           conf = (builtins.readFile ./st/config.def.h);
           patches = [./st/st-no_bold_colors-20160727-308bfbf.diff];
         };
-
-        #surf = pkgs.surf-webkit2.override { patches = ./surf.diff; };
+  
+        # Due to a bug in Nvidia driver this might require
+        # WEBKIT_DISABLE_COMPOSITING_MODE=1
+        # https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=229491
+        surf = pkgs.surf.override { patches = ./surf.diff; };
 
         gsasl = pkgs.stdenv.lib.overrideDerivation pkgs.gsasl (oldAttrs : {
                 nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.krb5Full];
@@ -97,7 +100,7 @@
             paths = [
                 firefox
                 mpv
-                #surf
+                surf
                 tabbed
                 youtube-dl  # A version without the X deps would be nice.
                 zathura
