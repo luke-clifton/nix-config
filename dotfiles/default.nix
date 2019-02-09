@@ -3,6 +3,7 @@ let
   lib = pkgs.lib;
   home = builtins.getEnv "HOME";
   dotfiles = {
+    ".bashrc" = ./bashrc;
     ".aspell.conf" = import ./aspell.nix pkgs;
     ".gitconfig" = ./gitconfig;
     ".xprofile" = import ./xprofile.nix pkgs;
