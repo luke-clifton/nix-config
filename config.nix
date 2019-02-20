@@ -19,6 +19,11 @@
         # https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=229491
         surf = pkgs.surf.override { patches = ./surf.diff; };
 
+        surfNVidia = pkgs.writeScriptBin "surf" ''
+            export WEBKIT_DISABLE_COMPOSITING_MODE=1
+            exec ${surf}/bin/surf "$@"
+          '';
+
         gsasl = pkgs.stdenv.lib.overrideDerivation pkgs.gsasl (oldAttrs : {
                 nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.krb5Full];
                 configureFlags = "--with-gssapi-impl=mit";

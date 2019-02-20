@@ -56,7 +56,7 @@ index 6d3135e..70a8d90 100644
  
  	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_c,      toggle,     { .i = CaretBrowsing } },
  	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } },
-@@ -159,8 +155,16 @@ static Button buttons[] = {
+@@ -159,8 +155,19 @@ static Button buttons[] = {
  	/* target       event mask      button  function        argument        stop event */
  	{ OnLink,       0,              2,      clicknewwindow, { .b = 0 },     1 },
  	{ OnLink,       MODKEY,         2,      clicknewwindow, { .b = 1 },     1 },
@@ -71,6 +71,9 @@ index 6d3135e..70a8d90 100644
 +	{ "g", "https://encrypted.google.com/search?q=%s"},
 +	{ "w", "https://en.wikipedia.org/w/index.php?search=%s"},
 +	{ "h", "https://hackage.haskell.org/packages/search?terms=%s"},
++	{ "hh", "https://hackage.haskell.org/package/%s"},
++	{ "ghl", "https://github.com/luke-clifton/%s"},
++	{ "gh", "https://github.com/%s"},
 +	{ "c", "https://crates.io/search?q=%s"},
 +};
 +
