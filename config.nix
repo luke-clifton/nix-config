@@ -3,6 +3,20 @@
     allowUnfree = true;
     packageOverrides = pkgs: rec {
 
+        dvtm = pkgs.stdenv.mkDerivation {
+          name = "dvtm";
+          src = pkgs.fetchFromGitHub {
+            owner = "luke-clifton";
+            repo  = "dvtm";
+            rev = "2b24c9cb16e618b14e18380f77fdda8dbeb32cf9";
+            sha256 = "0j9la6phiiw7m05a0grzr53lq0ly7123bffmvhz1v396ad2riyxb";
+          };
+          buildInputs = [ pkgs.ncurses ];
+          installPhase = ''
+            make PREFIX=$out install
+          '';
+        };
+
         # A more complete editing experience, but slightly slower
         # loading speeds.
         vimx = import ./vimx.nix pkgs;
@@ -43,7 +57,6 @@
                 let
                     linux_only = [
                       abduco
-                      dvtm-unstable
                       netcat-openbsd
                       nq
                       slmenu
@@ -52,6 +65,7 @@
                 in [
                   ack
                   curl
+                  dvtm
                   entr
                   file
                   git
