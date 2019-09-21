@@ -1,7 +1,5 @@
 {
-    # permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
-    # Uncomment when installing cntlm
-    # allowBroken = true;
+    allowBroken = true;
     allowUnfree = true;
     packageOverrides = pkgs: rec {
 
@@ -45,7 +43,7 @@
                 let
                     linux_only = [
                       abduco
-                      dvtm
+                      dvtm-unstable
                       netcat-openbsd
                       nq
                       slmenu
@@ -58,7 +56,6 @@
                   file
                   git
                   gitAndTools.git-crypt
-                  ired
                   moreutils
                   pv
                   vim
@@ -91,7 +88,7 @@
                 aspellDicts.en
                 imagemagick
                 isync
-                mutt
+                neomutt
                 openssl
                 haskellPackages.ShellCheck
                 vimx
@@ -105,7 +102,7 @@
             paths = [
                 firefox
                 mpv
-                surf
+                surfNVidia
                 tabbed
                 youtube-dl  # A version without the X deps would be nice.
                 zathura
