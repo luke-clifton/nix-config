@@ -12,6 +12,7 @@
             sha256 = "0j9la6phiiw7m05a0grzr53lq0ly7123bffmvhz1v396ad2riyxb";
           };
           buildInputs = [ pkgs.ncurses ];
+          CFLAGS = pkgs.stdenv.lib.optionalString pkgs.stdenv.isDarwin "-D_DARWIN_C_SOURCE";
           installPhase = ''
             make PREFIX=$out install
           '';
